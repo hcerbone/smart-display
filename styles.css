@@ -184,11 +184,34 @@ iframe {
 
 .display-grid {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-columns:
+    minmax(0, 552px)
+    repeat(11, minmax(0, 1fr));
   grid-template-rows: var(--bus-crop-height) minmax(0, 1fr);
   gap: 18px;
   align-items: stretch;
   min-height: 0;
+}
+
+.bus-panel {
+  grid-column: 1 / 2;
+  grid-row: 1;
+  width: 100%;
+  height: var(--bus-crop-height);
+}
+
+.sun-panel {
+  grid-column: 2 / 7;
+  grid-row: 1;
+  justify-self: stretch;
+  width: auto;
+  min-width: 0;
+  height: var(--bus-crop-height);
+  border: 0;
+  gap: 10px;
+  overflow: hidden;
+  backdrop-filter: none;
+  background: transparent;
 }
 
 .panel {
@@ -238,8 +261,6 @@ iframe {
   position: relative;
   grid-column: 1 / 7;
   grid-row: 1;
-  justify-self: end;
-  width: calc(100% - var(--bus-crop-width) - 18px);
   min-width: 0;
   height: var(--bus-crop-height);
   border: 0;
