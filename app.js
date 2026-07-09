@@ -4,7 +4,7 @@
   const defaultConfig = {
     displayName: "Display",
     location: {
-      label: "Oxford",
+      label: "",
       latitude: 51.752022,
       longitude: -1.257677,
       timezone: "Europe/London"
@@ -279,28 +279,34 @@
     }
 
     const daylightMinutes = sunsetMinutes - sunriseMinutes;
-    const remainingMinutes =
-      nowMinutes < sunriseMinutes
-        ? daylightMinutes
-        : Math.max(sunsetMinutes - nowMinutes, 0);
-    const progress = Math.min(
-      Math.max((nowMinutes - sunriseMinutes) / daylightMinutes, 0),
-      1
-    );
+    const DAY = 24 * 60;
+    const nowContinuous =
+      nowMinutes < sunriseMinutes ? nowMinutes + DAY : nowMinutes;
+    const sunsetContinuous = sunsetMinutes;
+    const nextSunriseMinutes = Array.isArray(daily.sunrise) ? minutesFromIsoTime(daily.sunrise[1]) : Number.NaN;
+    const nextSunriseContinuous = Number.isFinite(nextSunriseMinutes)
+      ? nextSunriseMinutes + DAY
+      : sunriseMinutes + DAY;
+    const isDaytime = nowContinuous >= sunriseMinutes && nowContinuous < sunsetContinuous;
+    const dayProgress = (nowContinuous - sunriseMinutes) / daylightMinutes;
+    const moonProgress = (nowContinuous - sunsetContinuous) / (nextSunriseContinuous - sunsetContinuous);
+    const progress = Math.min(Math.max(isDaytime ? dayProgress : moonProgress, 0), 1);
+    const remainingMinutes = isDaytime
+      ? Math.max(sunsetContinuous - nowContinuous, 1)
+      : Math.max(nextSunriseContinuous - nowContinuous, 1);
     const sunX = 9 + progress * 82;
     const sunY = 78 - Math.sin(progress * Math.PI) * 58;
 
     elements.sunriseTime.textContent = formatIsoTime(sunrise);
     elements.sunsetTime.textContent = formatIsoTime(sunset);
-    elements.daylightRemaining.textContent =
-      nowMinutes < sunriseMinutes
-        ? formatDurationMinutes(daylightMinutes)
-        : formatDurationMinutes(remainingMinutes);
+    elements.daylightRemaining.textContent = isDaytime
+      ? formatDurationMinutes(remainingMinutes)
+      : formatDurationMinutes(remainingMinutes);
     elements.sunPanel.style.setProperty("--sun-x", `${sunX}%`);
     elements.sunPanel.style.setProperty("--sun-y", `${sunY}%`);
     elements.sunPanel.style.setProperty("--sun-progress-percent", `${progress * 100}%`);
     elements.sunPanel.style.setProperty("--sun-progress-width", `${progress * 82}%`);
-    elements.sunPanel.classList.toggle("is-night", nowMinutes >= sunsetMinutes);
+    elements.sunPanel.classList.toggle("is-night", !isDaytime);
     elements.sunPanel.classList.remove("is-loading");
   }
 
@@ -339,24 +345,33 @@
 
       body {
         display: grid;
-        grid-template-rows: minmax(0, 1fr) max-content;
+        grid-template-rows: 1fr auto;
         gap: 0;
         padding: 2px 8px 7px;
       }
 
       .top {
         display: grid;
-        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-columns: 1fr auto;
         align-items: center;
-        justify-content: center;
         min-height: 0;
-        overflow: hidden;
-        gap: 6px;
+        gap: 10px;
+      }
+
+      .left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        min-width: 0;
       }
 
       .icon {
-        font-size: clamp(3rem, 24vmin, 4.8rem);
+        margin-top: 75px;
+        margin-right: 20px;
+        font-size: clamp(5rem, 36vmin, 8rem);
         line-height: 1;
+        justify-self: end;
+        align-self: center;
       }
 
       .temp {
@@ -372,40 +387,57 @@
         line-height: 0.95;
       }
 
-      .details {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 2px;
-        margin: 0;
-        padding-top: 2px;
-        font-size: clamp(0.62rem, 3.4vmin, 0.78rem);
-        font-weight: 750;
-        line-height: 1.08;
-        opacity: 0.82;
+      .humidity {
+        font-size: clamp(1rem, 8vmin, 1.5rem);
+        font-weight: 850;
+        line-height: 1;
+        white-space: nowrap;
+        padding-right: 10px;
+        padding-bottom: 15px;
       }
 
-      .details span {
-        min-width: 0;
-        overflow: hidden;
-        text-overflow: clip;
-        white-space: nowrap;
+      .bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
       }
+
+      .highlow {
+        font-size: clamp(1rem, 8vmin, 1.5rem);
+        font-weight: 850;
+        line-height: 1;
+        white-space: nowrap;
+        padding-right: 20px;
+        padding-bottom: 15px;
+      }
+
     </style>
   </head>
-  <body>
-    <div class="top">
-      <div class="icon" aria-hidden="true">${icon}</div>
-      <div>
-        <div class="temp">${escapeHtml(formatTemp(current.temperature_2m))}</div>
-        <p class="condition">${escapeHtml(condition)}</p>
-      </div>
+<body>
+  <div class="top">
+    <div class="left">
+      <div class="temp">${escapeHtml(formatTemp(current.temperature_2m))}</div>
+
+      <p class="condition">
+        ${escapeHtml(condition)}
+      </p>
+
     </div>
-    <p class="details">
-      <span>Feels ${escapeHtml(formatTemp(current.apparent_temperature))}</span>
-      <span>Humidity ${Number.isFinite(humidity) ? `${Math.round(humidity)}%` : "--"}</span>
-      <span>${escapeHtml(formatTemp(high))} / ${escapeHtml(formatTemp(low))}</span>
-    </p>
-  </body>
+
+    <div class="icon" aria-hidden="true">
+      ${icon}
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="humidity">
+          ${Number.isFinite(humidity) ? `${Math.round(humidity)}%` : "--"}
+        </div>
+    <div class="highlow">
+      ${escapeHtml(formatTemp(high))} / ${escapeHtml(formatTemp(low))}
+    </div>
+  </div>
+</body>
 </html>`;
     elements.todayWeatherFrame.srcdoc = html;
   }

@@ -259,7 +259,7 @@ iframe {
   --sun-progress-percent: 50%;
   --sun-progress-width: 41%;
   position: relative;
-  grid-column: 1 / 7;
+  grid-column: 2 / 7;
   grid-row: 1;
   min-width: 0;
   height: var(--bus-crop-height);
@@ -321,6 +321,7 @@ iframe {
   height: 30px;
   border-radius: 999px;
   background: currentColor;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.06);
   transform: translate(-50%, -50%);
 }
 
@@ -334,7 +335,18 @@ iframe {
 }
 
 .sun-panel.is-night .sun-dot {
-  opacity: 0.35;
+  width: 28px;
+    height: 28px;
+    background: transparent;
+    box-shadow: inset -9px 0 0 currentColor, 0 0 0 6px rgba(255, 255, 255, 0.04);
+  }
+  
+  .sun-panel.is-night .sun-dot::before {
+    inset: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: 8px 0 0 var(--panel);
+    opacity: 1;
 }
 
 .sun-times {

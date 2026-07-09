@@ -1,0 +1,40 @@
+name: Update display data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Refresh calendar and photo snapshots
+        env:
+          CALENDAR_ICS_URL: ${{ secrets.CALENDAR_ICS_URL }}
+          DISPLAY_TIMEZONE: ${{ vars.DISPLAY_TIMEZONE || 'Europe/London' }}
+          EVENT_KEYWORDS: ${{ vars.EVENT_KEYWORDS }}
+          FLICKR_FEED_URL: ${{ vars.FLICKR_FEED_URL }}
+          FLICKR_TAGS: ${{ vars.FLICKR_TAGS }}
+          FLICKR_USER_ID: ${{ vars.FLICKR_USER_ID || '40979668@N08' }}
+          MAX_EVENTS: ${{ vars.MAX_EVENTS || '6' }}
+        run: node scripts/update-data.mjs
+
+      - name: Commit changed snapshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/events.json data/photos.json
+          git diff --cached --quiet || git commit -m "Update display data"
+          git push

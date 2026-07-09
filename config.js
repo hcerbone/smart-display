@@ -1,7 +1,7 @@
 window.SMART_DISPLAY_CONFIG = {
   displayName: "Display",
   location: {
-    label: "Oxford",
+    label: "",
     latitude: 51.752022,
     longitude: -1.257677,
     timezone: "Europe/London"
