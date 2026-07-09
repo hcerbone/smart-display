@@ -190,7 +190,7 @@ iframe {
   display: grid;
   grid-template-columns:
     minmax(0, 552px)
-    repeat(11, minmax(0, 1fr));
+    repeat(12, minmax(0, 1fr));
   grid-template-rows: var(--bus-crop-height) minmax(0, 1fr);
   gap: 18px;
   align-items: stretch;
@@ -380,7 +380,7 @@ iframe {
 }
 
 .weather-panel {
-  grid-column: 9 / -1;
+  grid-column: 10 / -1;
   grid-row: 1;
   flex-direction: column;
   gap: 8px;

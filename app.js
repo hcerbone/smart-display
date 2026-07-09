@@ -402,6 +402,7 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
+        margin-bottom: 15px;
       }
 
       .highlow {
@@ -409,6 +410,7 @@
         font-weight: 850;
         line-height: 1;
         white-space: nowrap;
+        margin-right: 15px;
       }
 
     </style>
@@ -458,7 +460,7 @@
 
     elements.forecastList.replaceChildren();
 
-    dates.slice(0, 5).forEach((date, index) => {
+    dates.slice(1, 5).forEach((date, index) => {
       const item = document.createElement("li");
       const day = document.createElement("p");
       const icon = document.createElement("p");
@@ -1062,10 +1064,6 @@
   }
 
   function formatForecastDay(date, index) {
-    if (index === 0) {
-      return "Today";
-    }
-
     const parsed = new Date(`${date}T12:00:00`);
     if (Number.isNaN(parsed.getTime())) {
       return date;
