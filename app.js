@@ -100,7 +100,11 @@
     window.setInterval(refreshWeather, 15 * 60 * 1000);
     window.setInterval(refreshEvents, 5 * 60 * 1000);
     scheduleHourlyDisplayRefresh();
-    window.addEventListener("resize", sizePhotoFrame);
+    window.addEventListener("resize", handleViewportChange);
+  }
+
+  function handleViewportChange() {
+    sizePhotoFrame();
   }
 
   function configureBus() {
@@ -392,8 +396,6 @@
         font-weight: 850;
         line-height: 1;
         white-space: nowrap;
-        padding-right: 10px;
-        padding-bottom: 15px;
       }
 
       .bottom {
@@ -407,8 +409,6 @@
         font-weight: 850;
         line-height: 1;
         white-space: nowrap;
-        padding-right: 20px;
-        padding-bottom: 15px;
       }
 
     </style>
@@ -473,7 +473,7 @@
       day.textContent = formatForecastDay(date, index);
       icon.textContent = weatherIcon(code);
       temps.textContent = `${formatTemp(highs[index])} / ${formatTemp(lows[index])}`;
-      rainChance.textContent = Number.isFinite(rain[index]) ? `${Math.round(rain[index])}% rain` : "";
+      rainChance.textContent = Number.isFinite(rain[index]) ? `${Math.round(rain[index])}%` : "";
 
       item.append(day, icon, temps, rainChance);
       elements.forecastList.append(item);
