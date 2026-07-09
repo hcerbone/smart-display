@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://www.flickr.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.staticflickr.com https://live.staticflickr.com https://farm*.staticflickr.com; connect-src 'self' https://api.open-meteo.com https://sanzo-wada.dmbk.io; frame-src 'self' blob: https://www.oxontime.com https://oxontime.com https://*.oxontime.com https://*.acislive.com https://*.oxfordshire.gov.uk https://bustimes.org; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
+    >
+    <title>Display</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="config.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <main class="display-shell" aria-label="Smart display">
+      <header class="top-bar">
+        <div>
+          <p class="date-line" id="dateLine">Loading date</p>
+        </div>
+        <div class="clock flip-clock" id="clock" aria-label="Current time">--:--:--</div>
+      </header>
+
+      <section class="display-grid">
+        <section class="panel bus-panel" aria-label="OxonTime bus departures">
+          <div class="bus-frame-viewport">
+            <iframe
+              id="busFrame"
+              title="OxonTime bus departures"
+              loading="eager"
+              referrerpolicy="no-referrer"
+              scrolling="no"
+              sandbox="allow-forms allow-popups allow-same-origin allow-scripts"
+            ></iframe>
+          </div>
+        </section>
+
+        <section
+          class="panel sun-panel is-loading"
+          id="sunPanel"
+          aria-label="Sunrise, sunset, and daylight remaining"
+        >
+          <div class="sun-visual" aria-hidden="true">
+            <div class="sun-arc"></div>
+            <div class="sun-progress"></div>
+            <div class="sun-horizon"></div>
+            <div class="sun-dot"></div>
+          </div>
+          <div class="sun-times">
+            <p><strong id="sunriseTime" aria-label="Sunrise time">--:--</strong></p>
+            <p class="sun-remaining"><strong id="daylightRemaining" aria-label="Daylight remaining">--</strong></p>
+            <p><strong id="sunsetTime" aria-label="Sunset time">--:--</strong></p>
+          </div>
+        </section>
+
+        <section class="panel today-weather-panel" aria-label="Today's weather">
+          <iframe
+            id="todayWeatherFrame"
+            title="Today's weather"
+            loading="eager"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </section>
+
+        <section class="panel weather-panel" aria-label="Weather forecast">
+          <div class="panel-heading">
+            <div>
+              <p class="label" id="weatherLocation">Forecast</p>
+              <h2 id="weatherTitle"></h2>
+            </div>
+          </div>
+          <ol class="forecast-list" id="forecastList"></ol>
+          <p class="panel-status" id="weatherStatus"></p>
+        </section>
+
+        <section class="panel calendar-panel" aria-labelledby="calendarTitle">
+          <div class="panel-heading">
+            <div>
+              <p class="label">Calendar</p>
+              <h2 id="calendarTitle">Today</h2>
+            </div>
+            <p class="event-count" id="eventCount">0</p>
+          </div>
+          <ol class="event-list" id="eventList"></ol>
+          <p class="panel-status" id="calendarStatus">Loading events</p>
+        </section>
+
+        <section class="panel photo-panel" aria-label="Flickr photo">
+          <iframe
+            id="photoFrame"
+            title="Flickr photo"
+            loading="lazy"
+            referrerpolicy="no-referrer"
+          ></iframe>
+          <p class="photo-caption" id="photoCaption"></p>
+        </section>
+      </section>
+
+    </main>
+
+    <noscript>This display needs JavaScript for weather, calendar, and photo updates.</noscript>
+  </body>
+</html>
