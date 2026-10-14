@@ -2,6 +2,13 @@
   "source": "Flickr public feed",
   "photos": [
     {
+      "title": "Dogs and/as Pillows",
+      "author": "DRCPhoto",
+      "pageUrl": "https://www.flickr.com/photos/drcphotography/55589467496/",
+      "imageUrl": "https://live.staticflickr.com/65535/55589467496_79527975eb_b.jpg",
+      "fallbackUrl": "https://live.staticflickr.com/65535/55589467496_79527975eb_m.jpg"
+    },
+    {
       "title": "From the Morning Walk",
       "author": "DRCPhoto",
       "pageUrl": "https://www.flickr.com/photos/drcphotography/55581753602/",
@@ -133,13 +140,6 @@
       "pageUrl": "https://www.flickr.com/photos/drcphotography/55329154974/",
       "imageUrl": "https://live.staticflickr.com/65535/55329154974_f2b326ed0d_b.jpg",
       "fallbackUrl": "https://live.staticflickr.com/65535/55329154974_f2b326ed0d_m.jpg"
-    },
-    {
-      "title": "Muddy Creek (World Pinhole Day)",
-      "author": "DRCPhoto",
-      "pageUrl": "https://www.flickr.com/photos/drcphotography/55320242031/",
-      "imageUrl": "https://live.staticflickr.com/65535/55320242031_dbfd8d8c7e_b.jpg",
-      "fallbackUrl": "https://live.staticflickr.com/65535/55320242031_dbfd8d8c7e_m.jpg"
     }
   ]
 }
