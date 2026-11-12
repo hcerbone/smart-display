@@ -2,6 +2,13 @@
   "source": "Flickr public feed",
   "photos": [
     {
+      "title": "Autumn Morning",
+      "author": "DRCPhoto",
+      "pageUrl": "https://www.flickr.com/photos/drcphotography/55649429043/",
+      "imageUrl": "https://live.staticflickr.com/65535/55649429043_8d880eb0da_b.jpg",
+      "fallbackUrl": "https://live.staticflickr.com/65535/55649429043_8d880eb0da_m.jpg"
+    },
+    {
       "title": "From the Morning Walk",
       "author": "DRCPhoto",
       "pageUrl": "https://www.flickr.com/photos/drcphotography/55640418943/",
@@ -133,13 +140,6 @@
       "pageUrl": "https://www.flickr.com/photos/drcphotography/55582969359/",
       "imageUrl": "https://live.staticflickr.com/65535/55582969359_ca5070f680_b.jpg",
       "fallbackUrl": "https://live.staticflickr.com/65535/55582969359_ca5070f680_m.jpg"
-    },
-    {
-      "title": "Morning Fog",
-      "author": "DRCPhoto",
-      "pageUrl": "https://www.flickr.com/photos/drcphotography/55562163712/",
-      "imageUrl": "https://live.staticflickr.com/65535/55562163712_3f64aff9da_b.jpg",
-      "fallbackUrl": "https://live.staticflickr.com/65535/55562163712_3f64aff9da_m.jpg"
     }
   ]
 }
