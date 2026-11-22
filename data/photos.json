@@ -2,6 +2,13 @@
   "source": "Flickr public feed",
   "photos": [
     {
+      "title": "Miska (and Otto)",
+      "author": "DRCPhoto",
+      "pageUrl": "https://www.flickr.com/photos/drcphotography/55666258022/",
+      "imageUrl": "https://live.staticflickr.com/65535/55666258022_b14823486e_b.jpg",
+      "fallbackUrl": "https://live.staticflickr.com/65535/55666258022_b14823486e_m.jpg"
+    },
+    {
       "title": "Miska and Otto",
       "author": "DRCPhoto",
       "pageUrl": "https://www.flickr.com/photos/drcphotography/55652744430/",
@@ -133,13 +140,6 @@
       "pageUrl": "https://www.flickr.com/photos/drcphotography/55591673108/",
       "imageUrl": "https://live.staticflickr.com/65535/55591673108_a4c8edd4d9_b.jpg",
       "fallbackUrl": "https://live.staticflickr.com/65535/55591673108_a4c8edd4d9_m.jpg"
-    },
-    {
-      "title": "Dogs and/as Pillows",
-      "author": "DRCPhoto",
-      "pageUrl": "https://www.flickr.com/photos/drcphotography/55589467496/",
-      "imageUrl": "https://live.staticflickr.com/65535/55589467496_79527975eb_b.jpg",
-      "fallbackUrl": "https://live.staticflickr.com/65535/55589467496_79527975eb_m.jpg"
     }
   ]
 }
